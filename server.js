@@ -23,16 +23,27 @@ if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
 try {
     const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
     
-    // Ensure the private key is properly formatted
+    // Format the private key properly
     if (serviceAccount.private_key) {
-        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+        // Remove any existing newlines and add proper ones
+        serviceAccount.private_key = serviceAccount.private_key
+            .replace(/\\n/g, '\n')
+            .replace(/\n/g, '\\n')
+            .replace(/\\n/g, '\n');
     }
+
+    console.log('Initializing Firebase with service account:', {
+        project_id: serviceAccount.project_id,
+        client_email: serviceAccount.client_email
+    });
 
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
     });
+    console.log('Firebase Admin initialized successfully');
 } catch (error) {
     console.error('Error initializing Firebase Admin:', error);
+    console.error('Service Account:', process.env.FIREBASE_SERVICE_ACCOUNT);
     throw error;
 }
 
