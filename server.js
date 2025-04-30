@@ -10,10 +10,22 @@ const order = require("./routes/order");
 const app = express();
 
 // Initialize Firebase Admin SDK
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+let serviceAccount;
+try {
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  } else {
+    serviceAccount = require("./firebase-service-account.json");
+  }
+  
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+  console.log("Firebase Admin SDK initialized successfully");
+} catch (error) {
+  console.error("Error initializing Firebase Admin SDK:", error);
+  process.exit(1);
+}
 
 // Middleware
 app.use(cors());
