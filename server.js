@@ -12,15 +12,29 @@ import { dirname, join } from 'path';
 dotenv.config();
 const app = express();
 
-// Initialize Firebase Admin SDK
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Initialize Firebase Admin
 if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
     throw new Error('FIREBASE_SERVICE_ACCOUNT environment variable is required');
 }
 
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-});
+try {
+    const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    
+    // Ensure the private key is properly formatted
+    if (serviceAccount.private_key) {
+        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+    }
+
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount)
+    });
+} catch (error) {
+    console.error('Error initializing Firebase Admin:', error);
+    throw error;
+}
 
 // Middleware
 app.use(cors());
