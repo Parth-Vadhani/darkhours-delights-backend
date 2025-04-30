@@ -12,6 +12,8 @@
   },
   "variables": {
     "NODE_ENV": "production",
-    "PORT": "5005"
+    "PORT": "5005",
+    "NODE":"production"
+
   }
 }
