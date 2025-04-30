@@ -1,31 +1,20 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const admin = require("firebase-admin");
-const shopStatusRoutes = require("./routes/shopStatus");
-const items = require("./routes/items");
-const order = require("./routes/order");
+import dotenv from 'dotenv';
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import admin from 'firebase-admin';
+import shopStatusRoutes from './routes/shopStatus.js';
+import items from './routes/items.js';
+import order from './routes/order.js';
 
+dotenv.config();
 const app = express();
 
 // Initialize Firebase Admin SDK
-let serviceAccount;
-try {
-  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-  } else {
-    serviceAccount = require("./firebase-service-account.json");
-  }
-  
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-  console.log("Firebase Admin SDK initialized successfully");
-} catch (error) {
-  console.error("Error initializing Firebase Admin SDK:", error);
-  process.exit(1);
-}
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // Middleware
 app.use(cors());
