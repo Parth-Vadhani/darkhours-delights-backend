@@ -1,8 +1,9 @@
-const express = require("express");
+import express from 'express';
+import ShopStatus from '../models/ShopStatus.js';
+import { authenticateAdmin } from '../middleware/auth.js';
+import { addClient, removeClient, notifySSEClients } from '../middleware/sse.js';
+
 const router = express.Router();
-const ShopStatus = require("../models/ShopStatus");
-const authenticateAdmin = require("../middleware/auth");
-const { addClient, removeClient, notifySSEClients } = require("../middleware/sse");
 
 // GET shop status (public)
 router.get("/", async (req, res) => {
@@ -61,4 +62,4 @@ router.put("/", authenticateAdmin, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

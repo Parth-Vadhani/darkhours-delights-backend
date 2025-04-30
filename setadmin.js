@@ -1,4 +1,4 @@
-const admin = require("./firebaseAdmin");
+import admin from './firebaseAdmin.js';
 
 admin.auth().setCustomUserClaims("YzWoap2pKXYf4Mw7RouCNlHDcKm2", { admin: true })
     .then(() => {

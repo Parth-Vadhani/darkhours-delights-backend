@@ -1,8 +1,9 @@
-const express = require("express");
+import express from 'express';
+import mongoose from 'mongoose'; // For ObjectId validation
+import Item from '../models/Item.js';
+import { authenticateUser, authenticateAdmin } from '../middleware/auth.js';
+
 const router = express.Router();
-const mongoose = require("mongoose"); // For ObjectId validation
-const Item = require("../models/Item");
-const authenticateAdmin = require("../middleware/auth");
 
 router.get("/", async (req, res) => {
   try {
@@ -120,4 +121,4 @@ router.put("/:itemId/stock", authenticateAdmin, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

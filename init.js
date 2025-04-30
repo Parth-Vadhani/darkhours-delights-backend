@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const ShopStatus = require("./models/ShopStatus");
+import mongoose from 'mongoose';
+import ShopStatus from './models/ShopStatus.js';
 
 async function initialize() {
     try {
@@ -15,4 +15,4 @@ async function initialize() {
     }
 }
 
-module.exports = initialize;
+export default initialize;

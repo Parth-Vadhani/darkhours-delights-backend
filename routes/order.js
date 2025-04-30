@@ -1,10 +1,10 @@
-const express = require("express");
+import express from 'express';
+import Order from '../models/Order.js';
+import ShopStatus from '../models/ShopStatus.js';
+import { authenticateUser, authenticateAdmin } from '../middleware/auth.js';
+import admin from 'firebase-admin';
+
 const router = express.Router();
-const Order = require("../models/Order");
-const ShopStatus = require("../models/ShopStatus");
-const authenticateUser = require("../middleware/auth");
-const authenticateAdmin = require("../middleware/auth");
-const admin = require("firebase-admin");
 
 // Helper function to check shop status
 const checkShopStatus = async () => {
@@ -161,4 +161,4 @@ router.get("/phone/:phone", authenticateAdmin, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

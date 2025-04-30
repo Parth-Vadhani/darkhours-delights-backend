@@ -1,5 +1,5 @@
 // models/Item.js
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const itemSchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -10,4 +10,4 @@ const itemSchema = new mongoose.Schema({
     isAvailable: { type: Boolean, default: true }, // True if stock > 0
 });
 
-module.exports = mongoose.model("Item", itemSchema);
+export default mongoose.model("Item", itemSchema);

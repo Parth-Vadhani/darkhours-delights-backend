@@ -21,7 +21,7 @@ function removeClient(client) {
   clients.delete(client);
 }
 
-module.exports = {
+export {
   notifySSEClients,
   addClient,
   removeClient

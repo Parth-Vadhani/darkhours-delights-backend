@@ -1,6 +1,8 @@
 // firebaseAdmin.js
-const admin = require("firebase-admin");
-require("dotenv").config();
+import admin from 'firebase-admin';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Initialize only if not already initialized
 if (!admin.apps.length) {
@@ -9,4 +11,4 @@ if (!admin.apps.length) {
     });
 }
 
-module.exports = admin;
+export default admin;
