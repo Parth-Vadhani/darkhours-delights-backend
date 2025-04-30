@@ -6,17 +6,20 @@ import admin from 'firebase-admin';
 import shopStatusRoutes from './routes/shopStatus.js';
 import items from './routes/items.js';
 import order from './routes/order.js';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
 dotenv.config();
 const app = express();
 
 // Initialize Firebase Admin SDK
-const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT ? 
-  JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT) : 
-  require('./firebase-service-account.json');
+if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
+    throw new Error('FIREBASE_SERVICE_ACCOUNT environment variable is required');
+}
 
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(serviceAccount),
 });
 
 // Middleware
